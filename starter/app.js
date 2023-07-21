@@ -2,10 +2,20 @@ const express = require('express')
 const app = express()
 
 const port = 5001
+// import the router
+
+const task = require('./routes/tasks')
 // routes
-app.use('/',(req,res)=>{
-    res.send("hey")
+app.get('/',(req,res)=>{
+    res.send("<h1>hey</h1>")
 })
+// middleware
+app.use(express.json())
+// router
+app.use('/api/v1/tasks',task)
+
+
+
 
 app.listen(port,()=>{
     console.log(`server is listening on port ${port}`)
