@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 
@@ -14,9 +15,20 @@ app.use(express.json())
 // router
 app.use('/api/v1/tasks',task)
 
+// init db
+const dbconnection = require('./config/dbconfig')
 
+// call the db
 
-
-app.listen(port,()=>{
-    console.log(`server is listening on port ${port}`)
-})
+const start = async()=>{
+    try {
+        await dbconnection()
+        app.listen(port,()=>{
+            console.log(`server is listening on port ${port}`)
+        })
+        
+    } catch (error) {
+        console.error('Found error while fetchingthe data');
+    }
+}
+start()
